@@ -14,4 +14,11 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+/* get restaurants */
+Route::get('/restaurants', [RestaurantsController::class, 'allRestaurants']);
+Route::get('/restaurants/{id}', [RestaurantsController::class, 'singleRestaurant']);
+
+/* get restaurants products */
+Route::get('/restaurants/{id}/items', [RestaurantsController::class, 'itemsRestaurant']);
+
 
