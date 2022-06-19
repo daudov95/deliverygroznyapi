@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Api\RestaurantsController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\V1\RestaurantsController;
+use App\Http\Controllers\Api\V1\StoreController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,5 +20,14 @@ Route::get('/restaurants/{id}', [RestaurantsController::class, 'singleRestaurant
 
 /* get restaurants products */
 Route::get('/restaurants/{id}/items', [RestaurantsController::class, 'itemsRestaurant']);
+
+
+/* get stores */
+Route::get('/stores', [StoreController::class, 'allStores']);
+Route::get('/stores/{id}', [StoreController::class, 'singleStore']);
+
+/* get store products */
+Route::get('/stores/{id}/items', [StoreController::class, 'itemsStore']);
+
 
 

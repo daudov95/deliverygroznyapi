@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RestaurantCollection;
@@ -8,7 +8,6 @@ use App\Http\Resources\RestaurantItemCollection;
 use App\Http\Resources\RestaurantItemResource;
 use App\Http\Resources\RestaurantResource;
 use App\Models\Restaurant;
-use Illuminate\Http\Request;
 
 class RestaurantsController extends Controller
 {
@@ -56,8 +55,6 @@ class RestaurantsController extends Controller
                 'message' => 'Restaurant products not found'
             ], 404);
         }
-
-
 
         return response()->json([
             'status' => true,
