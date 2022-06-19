@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RestaurantCollection;
+use App\Http\Resources\RestaurantItemCollection;
+use App\Http\Resources\RestaurantItemResource;
 use App\Http\Resources\RestaurantResource;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
@@ -60,7 +62,7 @@ class RestaurantsController extends Controller
         return response()->json([
             'status' => true,
             'restaurant' => new RestaurantResource($items),
-            'items' => $items->products // Сделать вывод связанных товаров ресторана
+            'items' =>  new RestaurantItemCollection(new RestaurantItemResource($items->products))
         ], 200);
     }
 }
