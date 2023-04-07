@@ -15,8 +15,9 @@ return new class extends Migration
         Schema::create('store_reviews', function (Blueprint $table) {
             $table->id();
             $table->text("text");
-            $table->float('stars');
+            $table->integer('stars');
             $table->foreignId('store_id')->references('id')->on('stores');
+            $table->foreignId('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

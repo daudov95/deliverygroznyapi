@@ -16,9 +16,9 @@ return new class extends Migration
             $table->id();
             $table->string("title");
             $table->text("description")->nullable();
+            $table->string('time');
             $table->string('image');
             $table->integer("price");
-            $table->float('rating')->default(1.0);
             $table->boolean("is_open")->default(0);
             $table->boolean("is_hide")->default(1);
             $table->enum("type", ['store', 'restaurant']);

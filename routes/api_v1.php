@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\v1\CategoryController;
 use App\Http\Controllers\API\v1\StoreController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,3 +21,4 @@ Route::get("/users", function () {
 });
 
 Route::apiResource('stores', StoreController::class);
+Route::apiResource('categories', CategoryController::class);

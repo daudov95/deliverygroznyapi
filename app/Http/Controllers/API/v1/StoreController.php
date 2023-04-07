@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\API\v1;
 
+use App\Filters\StoreFilter;
+use App\Helpers\Helper;
+use App\Helpers\Helpers;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Store\StoreCollection;
 use App\Http\Resources\Store\StoreResource;
@@ -10,16 +13,23 @@ use Illuminate\Http\Request;
 
 class StoreController extends Controller
 {
+    private int $per_page = 2;
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request, StoreFilter $filters)
     {
-        $stores = Store::with(['filters', 'products'])->paginate(3);
-        $storeCollect = new StoreCollection($stores);
-//        return StoreResource::collection($stores);
-//        return $stores;
-        return response()->json($stores);
+//        dd(Store::find(1)->reviews()->count());
+        if($request->filled('limit') && intval($request->query('limit')) > 0){
+            $this->per_page = $request->query('limit');
+        }
+
+//        dd(new StoreCollection(Store::filter($filters)->get()));
+        $store = Store::query()->with(['filters', 'products', 'products.options', 'products.options.list', 'reviews'])->filter($filters)->paginate($this->per_page)->withQueryString();
+        return new StoreCollection($store);
+//        $stores = Store::query()->with(['filters', 'products', 'products.options', 'products.options.list'])->orderBy($this->orderBy, $this->direction)->paginate($this->per_page);
+//        return new StoreCollection($stores);
     }
 
     /**
@@ -33,12 +43,10 @@ class StoreController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id): StoreResource
     {
-        $store = Store::findOrFail($id);
-        $storeResource = new StoreResource($store);
-
-        return response()->json($storeResource);
+        $store = Store::query()->with(['filters', 'products', 'products.options', 'products.options.list'])->findOrFail($id);
+        return new StoreResource($store);
     }
 
     /**

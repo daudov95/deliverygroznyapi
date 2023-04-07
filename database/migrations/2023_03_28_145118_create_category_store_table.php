@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('stores', function (Blueprint $table) {
-            $table->foreignId('filter_id')->after('price')->nullable()->references('id')->on("store_filters");
+        Schema::create('category_store', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('store_id')->references('id')->on('stores');
+            $table->foreignId('category_id')->references('id')->on('categories');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('stores', function (Blueprint $table) {
-            $table->dropForeign(['filter_id']);
-        });
+        Schema::dropIfExists('category_store');
     }
 };

@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('store_products', function (Blueprint $table) {
-            $table->foreignId('option_id')->nullable()->references('id')->on('product_options');
-
+        Schema::create('product_option_values', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->integer('price');
+            $table->foreignId('option_id')->references('id')->on('product_options');
+            $table->timestamps();
         });
     }
 
@@ -22,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('store_products', function (Blueprint $table) {
-            $table->dropForeign(['option_id']);
-        });
+        Schema::dropIfExists('product_option_values');
     }
 };
